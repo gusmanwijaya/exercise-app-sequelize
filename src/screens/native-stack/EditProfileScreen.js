@@ -1,44 +1,68 @@
 import {View, ScrollView} from 'react-native';
 import React, {useState} from 'react';
+import tw from 'twrnc';
+import {useNavigation} from '@react-navigation/native';
 import Header from '../../components/Header';
 import Input from '../../components/Input';
 import Gap from '../../components/Gap';
 import Button from '../../components/Button';
 import SelectInput from '../../components/SelectInput';
-import {useNavigation} from '@react-navigation/native';
-import tw from 'twrnc';
 
-const SignUpAddressScreen = () => {
+const EditProfileScreen = () => {
   const navigation = useNavigation();
 
   const [form, setForm] = useState({
-    city: '',
+    city: 'Bengkulu',
   });
 
   return (
-    <ScrollView
-      contentContainerStyle={tw.style('grow')}
-      showsVerticalScrollIndicator={false}>
+    <View style={tw.style('flex-1')}>
       <Header
-        title="Address"
-        subTitle="Make sure it's valid"
+        title="Edit Profile"
+        subTitle="Please make your profile is valid"
         handleBack={() => navigation.goBack()}
       />
-      <View style={tw.style('flex-1 bg-white px-[24px] py-[26px] mt-[24px]')}>
+      <ScrollView
+        contentContainerStyle={tw.style(
+          'mt-[24px] android:pb-[50px] ios:pb-[60px] bg-white pt-[24px] px-[24px]',
+        )}
+        showsVerticalScrollIndicator={false}>
+        <Input
+          label="Full Name"
+          placeholder="Type your full name"
+          name="name"
+          value="Gusman Wijaya, S.Kom"
+        />
+        <Gap height={16} />
+        <Input
+          label="Email Address"
+          placeholder="Type your email address"
+          name="email"
+          keyboardType="email-address"
+          value="Gusman Wijaya, S.Kom"
+        />
+        <Gap height={16} />
         <Input
           label="Phone No"
           placeholder="Type your phone number"
-          keyboardType="phone-pad"
           name="phoneNumber"
+          keyboardType="phone-pad"
+          value="081312131213"
         />
         <Gap height={16} />
-        <Input label="Address" placeholder="Type your address" name="address" />
+        <Input
+          label="Address"
+          placeholder="Type your address"
+          name="address"
+          value="Jl. Cendrawasih No 11"
+        />
         <Gap height={16} />
         <Input
           label="House No"
           placeholder="Type your house number"
-          keyboardType="number-pad"
           name="houseNumber"
+          keyboardType="number-pad"
+          value="081312131213"
         />
         <Gap height={16} />
         <SelectInput
@@ -62,16 +86,12 @@ const SignUpAddressScreen = () => {
         <Button
           color="#FFC700"
           textColor="#020202"
-          text="Sign Up Now"
-          handlePress={() =>
-            navigation.replace('ContentTabs', {
-              screen: 'HomeScreen',
-            })
-          }
+          text="Update Profile"
+          handlePress={() => navigation.goBack()}
         />
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
-export default SignUpAddressScreen;
+export default EditProfileScreen;

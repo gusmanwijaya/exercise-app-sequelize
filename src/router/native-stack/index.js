@@ -6,6 +6,7 @@ import SplashScreen from '../../screens/native-stack/SplashScreen';
 import SignUpAddressScreen from '../../screens/native-stack/SignUpAddressScreen';
 import SuccessOrderScreen from '../../screens/native-stack/SuccessOrderScreen';
 import SuccessSignUpScreen from '../../screens/native-stack/SuccessSignUpScreen';
+import EditProfileScreen from '../../screens/native-stack/EditProfileScreen';
 
 import ContentTabs from '../bottom-tabs';
 
@@ -47,6 +48,11 @@ const Router = () => {
       <Stack.Screen
         name="ContentTabs"
         component={ContentTabs}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="EditProfileScreen"
+        component={EditProfileScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
