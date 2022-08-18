@@ -81,7 +81,12 @@ const FoodDetailScreen = () => {
             <Number number={30000} />
           </View>
           <View style={tw.style('w-[163px]')}>
-            <Button text="Order Now" color="#FFC700" textColor="#020202" />
+            <Button
+              text="Order Now"
+              color="#FFC700"
+              textColor="#020202"
+              handlePress={() => navigation.navigate('OrderSummaryScreen')}
+            />
           </View>
         </View>
       </View>

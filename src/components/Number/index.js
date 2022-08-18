@@ -28,8 +28,9 @@ const Number = ({number, type}) =>
       displayType="text"
       renderText={value => (
         <Text
-          style={tw.style('text-[12px] text-[#8D92A3]', {
+          style={tw.style('text-[12px]', {
             fontFamily: 'Poppins-Regular',
+            color: type === 'currency' ? '#020202' : '#8D92A3',
           })}>
           {value}
         </Text>

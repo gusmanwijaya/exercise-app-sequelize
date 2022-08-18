@@ -6,6 +6,7 @@ import FoodItemList from '../../../components/FoodItemList';
 import FoodDummy1 from '../../../assets/Dummy/food-dummy1.png';
 
 const NewTasteRoute = () => {
+  const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
@@ -28,6 +29,7 @@ const NewTasteRoute = () => {
           rating={3.5}
           imgSource={FoodDummy1}
           type="products"
+          handlePress={() => navigation.navigate('FoodDetailScreen')}
         />
         <FoodItemList
           name={'Cherry Healthy'}

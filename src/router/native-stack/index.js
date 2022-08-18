@@ -8,6 +8,8 @@ import SuccessOrderScreen from '../../screens/native-stack/SuccessOrderScreen';
 import SuccessSignUpScreen from '../../screens/native-stack/SuccessSignUpScreen';
 import EditProfileScreen from '../../screens/native-stack/EditProfileScreen';
 import FoodDetailScreen from '../../screens/native-stack/FoodDetailScreen';
+import OrderSummaryScreen from '../../screens/native-stack/OrderSummaryScreen';
+import OrderDetailScreen from '../../screens/native-stack/OrderDetailScreen';
 
 import ContentTabs from '../bottom-tabs';
 
@@ -59,6 +61,16 @@ const Router = () => {
       <Stack.Screen
         name="FoodDetailScreen"
         component={FoodDetailScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="OrderSummaryScreen"
+        component={OrderSummaryScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="OrderDetailScreen"
+        component={OrderDetailScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

@@ -6,6 +6,7 @@ import FoodItemList from '../../../components/FoodItemList';
 import FoodDummy2 from '../../../assets/Dummy/food-dummy2.png';
 
 const PopularRoute = () => {
+  const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
@@ -28,6 +29,7 @@ const PopularRoute = () => {
           rating={3.5}
           imgSource={FoodDummy2}
           type="products"
+          handlePress={() => navigation.navigate('FoodDetailScreen')}
         />
         <FoodItemList
           name={'Cherry Healthy'}

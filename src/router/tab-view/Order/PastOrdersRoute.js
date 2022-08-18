@@ -6,6 +6,7 @@ import FoodItemList from '../../../components/FoodItemList';
 import FoodDummy2 from '../../../assets/Dummy/food-dummy2.png';
 
 const PastOrdersRoute = () => {
+  const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
@@ -29,6 +30,7 @@ const PastOrdersRoute = () => {
           imgSource={FoodDummy2}
           items={5}
           type="past-orders"
+          handlePress={() => navigation.navigate('OrderDetailScreen')}
         />
         <FoodItemList
           name={'Cherry Healthy'}

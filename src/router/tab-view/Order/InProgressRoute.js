@@ -6,6 +6,7 @@ import FoodItemList from '../../../components/FoodItemList';
 import FoodDummy1 from '../../../assets/Dummy/food-dummy1.png';
 
 const InProgressRoute = () => {
+  const navigation = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
@@ -29,6 +30,7 @@ const InProgressRoute = () => {
           imgSource={FoodDummy1}
           items={3}
           type="in-progress"
+          handlePress={() => navigation.navigate('OrderDetailScreen')}
         />
         <FoodItemList
           name={'Cherry Healthy'}
