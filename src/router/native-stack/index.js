@@ -7,6 +7,7 @@ import SignUpAddressScreen from '../../screens/native-stack/SignUpAddressScreen'
 import SuccessOrderScreen from '../../screens/native-stack/SuccessOrderScreen';
 import SuccessSignUpScreen from '../../screens/native-stack/SuccessSignUpScreen';
 import EditProfileScreen from '../../screens/native-stack/EditProfileScreen';
+import FoodDetailScreen from '../../screens/native-stack/FoodDetailScreen';
 
 import ContentTabs from '../bottom-tabs';
 
@@ -53,6 +54,11 @@ const Router = () => {
       <Stack.Screen
         name="EditProfileScreen"
         component={EditProfileScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="FoodDetailScreen"
+        component={FoodDetailScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

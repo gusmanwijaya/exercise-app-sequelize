@@ -1,6 +1,7 @@
 import {View, ScrollView} from 'react-native';
 import React from 'react';
 import tw from 'twrnc';
+import {useNavigation} from '@react-navigation/native';
 import ProfileDummy from '../../assets/Dummy/profile-dummy.png';
 import FoodDummy1 from '../../assets/Dummy/food-dummy1.png';
 import FoodDummy2 from '../../assets/Dummy/food-dummy2.png';
@@ -13,6 +14,8 @@ import FoodCard from '../../components/FoodCard';
 import HomeTabView from '../tab-view/Home';
 
 const HomeScreen = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={tw.style('flex-1')}>
       <Header
@@ -28,6 +31,7 @@ const HomeScreen = () => {
               imgSource={FoodDummy1}
               name="Cherry Healthy"
               rating={3.5}
+              handlePress={() => navigation.navigate('FoodDetailScreen')}
             />
             <FoodCard
               imgSource={FoodDummy2}
