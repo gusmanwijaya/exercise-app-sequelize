@@ -5,15 +5,71 @@ import Input from '../../components/Input';
 import Gap from '../../components/Gap';
 import Button from '../../components/Button';
 import SelectInput from '../../components/SelectInput';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import tw from 'twrnc';
+import {toast} from '../../utils/toast';
+import {signUp} from '../../services/auth';
 
 const SignUpAddressScreen = () => {
   const navigation = useNavigation();
+  const {params} = useRoute();
 
   const [form, setForm] = useState({
+    name: params?.name,
+    email: params?.email,
+    password: params?.password,
+    address: '',
+    houseNumber: '',
+    phoneNumber: '',
     city: '',
+    picturePath: {
+      uri: params?.imageData?.uri,
+      type: params?.imageData?.type,
+      name: params?.imageData?.fileName,
+    },
   });
+
+  const handleSignUp = async () => {
+    if (
+      form?.address !== '' &&
+      form?.houseNumber !== '' &&
+      form?.phoneNumber !== '' &&
+      form?.city !== ''
+    ) {
+      const formData = new FormData();
+      formData.append('name', form?.name);
+      formData.append('email', form?.email);
+      formData.append('password', form?.password);
+      formData.append('address', form?.address);
+      formData.append('houseNumber', form?.houseNumber);
+      formData.append('phoneNumber', form?.phoneNumber);
+      formData.append('city', form?.city);
+      formData.append('picturePath', form?.picturePath);
+
+      const response = await signUp(true, formData);
+      if (response?.data?.statusCode === 201) {
+        toast(
+          response?.data?.message || 'Akun anda berhasil didaftarkan',
+          'success',
+        );
+        navigation.reset({
+          index: 0,
+          routes: [
+            {
+              name: 'SignInScreen',
+            },
+          ],
+        });
+      } else {
+        toast(
+          response?.data?.message || 'Terjadi kesalahan pada API sistem',
+          'danger',
+        );
+      }
+    } else {
+      toast('Silahkan isi semua field yang tersedia', 'danger');
+    }
+  };
 
   return (
     <ScrollView
@@ -30,15 +86,22 @@ const SignUpAddressScreen = () => {
           placeholder="Type your phone number"
           keyboardType="phone-pad"
           name="phoneNumber"
+          onChangeText={value => setForm({...form, phoneNumber: value})}
         />
         <Gap height={16} />
-        <Input label="Address" placeholder="Type your address" name="address" />
+        <Input
+          label="Address"
+          placeholder="Type your address"
+          name="address"
+          onChangeText={value => setForm({...form, address: value})}
+        />
         <Gap height={16} />
         <Input
           label="House No"
           placeholder="Type your house number"
           keyboardType="number-pad"
           name="houseNumber"
+          onChangeText={value => setForm({...form, houseNumber: value})}
         />
         <Gap height={16} />
         <SelectInput
@@ -63,11 +126,7 @@ const SignUpAddressScreen = () => {
           color="#FFC700"
           textColor="#020202"
           text="Sign Up Now"
-          handlePress={() =>
-            navigation.replace('ContentTabs', {
-              screen: 'HomeScreen',
-            })
-          }
+          handlePress={handleSignUp}
         />
       </View>
     </ScrollView>
