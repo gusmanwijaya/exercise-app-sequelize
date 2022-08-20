@@ -1,9 +1,6 @@
 import {ERROR_PROFILE, GET_PROFILE} from './types';
 import {getProfile} from '../../services/profile';
-import debounce from 'debounce-promise';
-import {getData} from '../../utils/asyncStorage';
-
-const debouncedGetProfile = debounce(getProfile, 1000);
+import {setLoading} from '../loading/actions';
 
 const setGetProfile = data => {
   return {
@@ -21,12 +18,14 @@ const setErrorProfile = error => {
 
 const fetchProfile = () => {
   return async dispatch => {
-    const token = await getData('token');
+    dispatch(setLoading(true));
 
-    const response = await debouncedGetProfile(token);
+    const response = await getProfile();
     if (response?.data?.statusCode === 200) {
+      dispatch(setLoading(false));
       dispatch(setGetProfile(response?.data?.data));
     } else {
+      dispatch(setLoading(false));
       dispatch(setErrorProfile(response));
     }
   };

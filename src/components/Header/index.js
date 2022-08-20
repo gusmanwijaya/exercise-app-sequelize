@@ -32,7 +32,12 @@ const Header = ({title, subTitle, handleBack, imgSource}) => {
       </View>
       {imgSource && (
         <View style={tw.style('ios:ml-[150px] android:ml-[170px]')}>
-          <Image source={imgSource} style={tw.style('rounded-[8px]')} />
+          <Image
+            source={imgSource}
+            style={tw.style('rounded-[8px] w-[50px] h-[50px]', {
+              resizeMode: 'cover',
+            })}
+          />
         </View>
       )}
     </View>

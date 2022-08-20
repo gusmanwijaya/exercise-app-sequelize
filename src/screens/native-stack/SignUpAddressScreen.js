@@ -9,9 +9,12 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import tw from 'twrnc';
 import {toast} from '../../utils/toast';
 import {signUp} from '../../services/auth';
+import {useDispatch} from 'react-redux';
+import {setLoading} from '../../redux/loading/actions';
 
 const SignUpAddressScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const {params} = useRoute();
 
   const [form, setForm] = useState({
@@ -22,6 +25,7 @@ const SignUpAddressScreen = () => {
     houseNumber: '',
     phoneNumber: '',
     city: '',
+    pictureUri: params?.imageData?.uri,
     picturePath: {
       uri: params?.imageData?.uri,
       type: params?.imageData?.type,
@@ -30,6 +34,7 @@ const SignUpAddressScreen = () => {
   });
 
   const handleSignUp = async () => {
+    dispatch(setLoading(true));
     if (
       form?.address !== '' &&
       form?.houseNumber !== '' &&
@@ -44,10 +49,12 @@ const SignUpAddressScreen = () => {
       formData.append('houseNumber', form?.houseNumber);
       formData.append('phoneNumber', form?.phoneNumber);
       formData.append('city', form?.city);
+      formData.append('pictureUri', form?.pictureUri);
       formData.append('picturePath', form?.picturePath);
 
       const response = await signUp(true, formData);
       if (response?.data?.statusCode === 201) {
+        dispatch(setLoading(false));
         toast(
           response?.data?.message || 'Akun anda berhasil didaftarkan',
           'success',
@@ -61,12 +68,14 @@ const SignUpAddressScreen = () => {
           ],
         });
       } else {
+        dispatch(setLoading(false));
         toast(
           response?.data?.message || 'Terjadi kesalahan pada API sistem',
           'danger',
         );
       }
     } else {
+      dispatch(setLoading(false));
       toast('Silahkan isi semua field yang tersedia', 'danger');
     }
   };

@@ -1,5 +1,6 @@
 export const HOST_API = {
-  url: 'https://fair-geese-add-110-137-75-221.loca.lt/api/v1',
-  imageUsers: 'https://fair-geese-add-110-137-75-221.loca.lt/uploads/users',
-  imageFoods: 'https://fair-geese-add-110-137-75-221.loca.lt/uploads/foods',
+  host: 'https://ninety-socks-bake-110-137-73-109.loca.lt',
+  url: 'https://ninety-socks-bake-110-137-73-109.loca.lt/api/v1',
+  imageUsers: 'https://ninety-socks-bake-110-137-73-109.loca.lt/uploads/users',
+  imageFoods: 'https://ninety-socks-bake-110-137-73-109.loca.lt/uploads/foods',
 };

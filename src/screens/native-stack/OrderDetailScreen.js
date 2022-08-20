@@ -1,7 +1,7 @@
 import {View, Text, ScrollView} from 'react-native';
 import React from 'react';
 import tw from 'twrnc';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import Header from '../../components/Header';
 import FoodDummy5 from '../../assets/Dummy/food-dummy5.png';
 import FoodItemList from '../../components/FoodItemList';
@@ -11,6 +11,7 @@ import Gap from '../../components/Gap';
 
 const OrderDetailScreen = () => {
   const navigation = useNavigation();
+  const {params} = useRoute();
 
   return (
     <View style={tw.style('flex-1')}>

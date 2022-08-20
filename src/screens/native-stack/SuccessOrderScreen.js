@@ -4,8 +4,11 @@ import tw from 'twrnc';
 import SuccessOrderIllustration from '../../assets/Ilustration/SuccessOrder.svg';
 import Button from '../../components/Button';
 import Gap from '../../components/Gap';
+import {useNavigation} from '@react-navigation/native';
 
 const SuccessOrderScreen = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={tw.style('flex-1 justify-center items-center bg-white')}>
       <View style={tw.style('w-[200px] h-[177px]')}>
@@ -29,11 +32,25 @@ const SuccessOrderScreen = () => {
       </View>
       <Gap height={30} />
       <View style={tw.style('w-full ios:px-21 android:px-24')}>
-        <Button color="#FFC700" textColor="#020202" text="Order Other Foods" />
+        <Button
+          color="#FFC700"
+          textColor="#020202"
+          text="Order Other Foods"
+          handlePress={() =>
+            navigation.replace('ContentTabs', {screen: 'HomeScreen'})
+          }
+        />
       </View>
       <Gap height={12} />
       <View style={tw.style('w-full ios:px-21 android:px-24')}>
-        <Button text="View My Order" color="#8D92A3" textColor="white" />
+        <Button
+          text="View My Order"
+          color="#8D92A3"
+          textColor="white"
+          handlePress={() =>
+            navigation.replace('ContentTabs', {screen: 'OrderScreen'})
+          }
+        />
       </View>
     </View>
   );

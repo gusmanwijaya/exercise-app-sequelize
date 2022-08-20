@@ -4,14 +4,27 @@ import tw from 'twrnc';
 import Logo from '../../assets/Ilustration/Logo.svg';
 import Gap from '../../components/Gap';
 import {useNavigation} from '@react-navigation/native';
+import {getData} from '../../utils/asyncStorage';
 
 const SplashScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    setTimeout(() => {
-      navigation.replace('SignInScreen');
-    }, 3000);
+    setTimeout(async () => {
+      const token = await getData('token');
+      if (token) {
+        navigation.reset({
+          index: 0,
+          routes: [
+            {
+              name: 'ContentTabs',
+            },
+          ],
+        });
+      } else {
+        navigation.replace('SignInScreen');
+      }
+    }, 2000);
   }, [navigation]);
 
   return (

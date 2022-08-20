@@ -3,7 +3,7 @@ import {HOST_API} from '../../configs/hostApi';
 
 const ROOT_API = HOST_API.url;
 
-export async function getProfile(token) {
+export async function getProfile() {
   const url = `${ROOT_API}/users/detail`;
-  return callApi({url, method: 'GET', token});
+  return callApi({url, method: 'GET'});
 }
