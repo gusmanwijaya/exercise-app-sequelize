@@ -27,3 +27,8 @@ export async function getDetailTransaction(id) {
   const url = `${ROOT_API}/transactions/detail/${id}`;
   return callApi({url, method: 'GET'});
 }
+
+export async function cancelTransaction(data) {
+  const url = `${ROOT_API}/transactions/cancel`;
+  return callApi({url, method: 'POST', data});
+}

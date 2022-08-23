@@ -10,7 +10,7 @@ import FoodCard from '../../components/FoodCard';
 import HomeTabView from '../tab-view/Home';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchProfile} from '../../redux/profile/actions';
-import {fetchFood} from '../../redux/food/actions';
+import {fetchFood, fetchFoodByTypes} from '../../redux/food/actions';
 import {HOST_API} from '../../configs/hostApi';
 import {getData, storeData} from '../../utils/asyncStorage';
 import jwtDecode from 'jwt-decode';
@@ -61,12 +61,15 @@ const HomeScreen = () => {
   useEffect(() => {
     setInterval(() => {
       getNewAccessTokenWhenCloseToExpire();
-    }, 1000 * 60 * 18); //Ulangi setiap 18 menit
+    }, 1000 * 60 * 8); //Ulangi setiap 8 menit
   }, [getNewAccessTokenWhenCloseToExpire]);
 
   useEffect(() => {
     dispatch(fetchProfile());
     dispatch(fetchFood());
+    dispatch(fetchFoodByTypes('newTaste'));
+    dispatch(fetchFoodByTypes('popular'));
+    dispatch(fetchFoodByTypes('recommended'));
   }, [dispatch]);
 
   return (

@@ -33,9 +33,6 @@ const FoodDetailScreen = () => {
 
   const handleOrderNow = () => {
     const totalPrice = totalItem * detail?.price;
-    const driver = 15000;
-    const tax = (10 / 100) * totalPrice;
-    const totalOrder = totalPrice + driver + tax;
 
     const payload = {
       item: {
@@ -47,9 +44,6 @@ const FoodDetailScreen = () => {
       transaction: {
         totalItem,
         totalPrice,
-        driver,
-        tax,
-        totalOrder,
       },
       user: data,
     };

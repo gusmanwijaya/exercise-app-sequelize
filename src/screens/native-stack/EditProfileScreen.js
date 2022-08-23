@@ -1,5 +1,5 @@
 import {View, ScrollView} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import tw from 'twrnc';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../components/Header';
@@ -7,13 +7,29 @@ import Input from '../../components/Input';
 import Gap from '../../components/Gap';
 import Button from '../../components/Button';
 import SelectInput from '../../components/SelectInput';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchProfile} from '../../redux/profile/actions';
 
 const EditProfileScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const {data} = useSelector(state => state.profileReducers);
 
   const [form, setForm] = useState({
-    city: 'Bengkulu',
+    name: data?.name,
+    email: data?.email,
+    phoneNumber: data?.phoneNumber,
+    address: data?.address,
+    houseNumber: data?.houseNumber,
+    city: data?.city,
   });
+
+  const handleUpdateProfile = async () => {};
+
+  useEffect(() => {
+    dispatch(fetchProfile());
+  }, [dispatch]);
 
   return (
     <View style={tw.style('flex-1')}>
@@ -31,7 +47,7 @@ const EditProfileScreen = () => {
           label="Full Name"
           placeholder="Type your full name"
           name="name"
-          value="Gusman Wijaya, S.Kom"
+          value={form?.name}
         />
         <Gap height={16} />
         <Input
@@ -39,7 +55,7 @@ const EditProfileScreen = () => {
           placeholder="Type your email address"
           name="email"
           keyboardType="email-address"
-          value="Gusman Wijaya, S.Kom"
+          value={form?.email}
         />
         <Gap height={16} />
         <Input
@@ -47,14 +63,14 @@ const EditProfileScreen = () => {
           placeholder="Type your phone number"
           name="phoneNumber"
           keyboardType="phone-pad"
-          value="081312131213"
+          value={form?.phoneNumber}
         />
         <Gap height={16} />
         <Input
           label="Address"
           placeholder="Type your address"
           name="address"
-          value="Jl. Cendrawasih No 11"
+          value={form?.address}
         />
         <Gap height={16} />
         <Input
@@ -62,7 +78,7 @@ const EditProfileScreen = () => {
           placeholder="Type your house number"
           name="houseNumber"
           keyboardType="number-pad"
-          value="081312131213"
+          value={form?.houseNumber}
         />
         <Gap height={16} />
         <SelectInput
@@ -87,7 +103,7 @@ const EditProfileScreen = () => {
           color="#FFC700"
           textColor="#020202"
           text="Update Profile"
-          handlePress={() => navigation.goBack()}
+          handlePress={handleUpdateProfile}
         />
       </ScrollView>
     </View>

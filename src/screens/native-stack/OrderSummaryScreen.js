@@ -126,21 +126,10 @@ const OrderSummaryScreen = () => {
             type="currency"
           />
           <Gap height={6} />
-          <ItemValue
-            label="Driver"
-            value={params?.transaction?.driver}
-            type="currency"
-          />
           <Gap height={6} />
           <ItemValue
-            label="Tax 10%"
-            value={params?.transaction?.tax}
-            type="currency"
-          />
-          <Gap height={6} />
-          <ItemValue
-            label="Total Order"
-            value={`IDR ${params?.transaction?.totalOrder}`}
+            label="Total Price"
+            value={`IDR ${params?.transaction?.totalPrice}`}
             color="#1ABC9C"
           />
         </View>

@@ -7,7 +7,10 @@ import Button from '../../components/Button';
 import Header from '../../components/Header';
 import OrderTabView from '../tab-view/Order';
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchTransaction} from '../../redux/transaction/actions';
+import {
+  fetchTransaction,
+  fetchTransactionByStatus,
+} from '../../redux/transaction/actions';
 import {useNavigation} from '@react-navigation/native';
 
 const OrderScreen = () => {
@@ -18,6 +21,9 @@ const OrderScreen = () => {
 
   useEffect(() => {
     dispatch(fetchTransaction());
+    dispatch(fetchTransactionByStatus('pending'));
+    dispatch(fetchTransactionByStatus('cancel'));
+    dispatch(fetchTransactionByStatus('settlement'));
   }, [dispatch]);
 
   return data.length > 0 ? (

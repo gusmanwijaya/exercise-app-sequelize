@@ -1,10 +1,21 @@
 import {View, Text, TouchableOpacity, Image} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import tw from 'twrnc';
 import ProfileDummy from '../../assets/Dummy/profile-dummy.png';
 import ProfileTabView from '../tab-view/Profile';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchProfile} from '../../redux/profile/actions';
+import {HOST_API} from '../../configs/hostApi';
 
 const ProfileScreen = () => {
+  const dispatch = useDispatch();
+
+  const {data} = useSelector(state => state.profileReducers);
+
+  useEffect(() => {
+    dispatch(fetchProfile());
+  }, [dispatch]);
+
   return (
     <View style={tw.style('flex-1')}>
       {/* START: Header Profile */}
@@ -22,7 +33,11 @@ const ProfileScreen = () => {
                 'w-[110px] h-[110px] rounded-[110px] border border-dashed border-[#8D92A3] justify-center items-center',
               )}>
               <Image
-                source={ProfileDummy}
+                source={
+                  data?.picturePath
+                    ? {uri: `${HOST_API.imageUsers}/${data?.picturePath}`}
+                    : ProfileDummy
+                }
                 style={tw.style(
                   'w-[90px] h-[90px] rounded-[90px] bg-[#F0F0F0] p-[24px]',
                 )}
@@ -34,7 +49,7 @@ const ProfileScreen = () => {
           style={tw.style('text-[18px] text-[#020202] mb-[6px]', {
             fontFamily: 'Poppins-Medium',
           })}>
-          Gusman Wijaya, S.Kom
+          {data?.name}
         </Text>
         <Text
           style={tw.style(
@@ -43,7 +58,7 @@ const ProfileScreen = () => {
               fontFamily: 'Poppins-Light',
             },
           )}>
-          gusman.w.jaya@gmail.com
+          {data?.email}
         </Text>
       </View>
       {/* END: Header Profile */}
