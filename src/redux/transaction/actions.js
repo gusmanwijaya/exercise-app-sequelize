@@ -4,7 +4,7 @@ import {
   ERROR_TRANSACTION,
   GET_TRANSACTION_CANCEL,
   GET_TRANSACTION_PENDING,
-  GET_TRANSACTION_SENTLEMENT,
+  GET_TRANSACTION_SETTLEMENT,
 } from './types';
 import {
   getTransaction,
@@ -41,10 +41,10 @@ const setGetTransactionCancel = cancel => {
   };
 };
 
-const setGetTransactionSentlement = sentlement => {
+const setGetTransactionSettlement = settlement => {
   return {
-    type: GET_TRANSACTION_SENTLEMENT,
-    sentlement,
+    type: GET_TRANSACTION_SETTLEMENT,
+    settlement,
   };
 };
 
@@ -86,8 +86,8 @@ const fetchTransactionByStatus = status => {
         dispatch(setGetTransactionCancel(response?.data?.data));
       }
 
-      if (status === 'sentlement') {
-        dispatch(setGetTransactionSentlement(response?.data?.data));
+      if (status === 'settlement') {
+        dispatch(setGetTransactionSettlement(response?.data?.data));
       }
     } else {
       dispatch(setLoading(false));

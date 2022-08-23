@@ -17,14 +17,14 @@ const PastOrdersRoute = () => {
 
   useEffect(() => {
     dispatch(fetchTransactionByStatus('cancel'));
-    dispatch(fetchTransactionByStatus('sentlement'));
+    dispatch(fetchTransactionByStatus('settlement'));
   }, [dispatch]);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
       dispatch(fetchTransactionByStatus('cancel'));
-      dispatch(fetchTransactionByStatus('sentlement'));
+      dispatch(fetchTransactionByStatus('settlement'));
       setRefreshing(false);
     }, 500);
   }, [dispatch]);
@@ -36,8 +36,8 @@ const PastOrdersRoute = () => {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }>
       <View style={tw.style('px-[24px] pt-[8px]')}>
-        {transactionByStatus?.sentlement.length > 0 &&
-          transactionByStatus?.sentlement.map((value, index) => (
+        {transactionByStatus?.settlement.length > 0 &&
+          transactionByStatus?.settlement.map((value, index) => (
             <FoodItemList
               key={index}
               name={value?.food?.name}

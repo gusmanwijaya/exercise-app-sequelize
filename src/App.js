@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import Router from './router/native-stack';
 import FlashMessage from 'react-native-flash-message';
 import {Provider, useSelector} from 'react-redux';
 import Loading from './components/Loading';
 import store from './redux/store';
+import {listen} from './redux/listener';
 
 // START: App Colors
 // {
@@ -18,6 +19,11 @@ import store from './redux/store';
 
 const MainApp = () => {
   const {isLoading} = useSelector(state => state.loadingReducers);
+
+  useEffect(() => {
+    listen();
+  }, []);
+
   return (
     <NavigationContainer>
       <Router />

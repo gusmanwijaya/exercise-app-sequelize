@@ -1,6 +1,6 @@
 export const HOST_API = {
-  host: 'https://ninety-socks-bake-110-137-73-109.loca.lt',
-  url: 'https://ninety-socks-bake-110-137-73-109.loca.lt/api/v1',
-  imageUsers: 'https://ninety-socks-bake-110-137-73-109.loca.lt/uploads/users',
-  imageFoods: 'https://ninety-socks-bake-110-137-73-109.loca.lt/uploads/foods',
+  host: 'https://chatty-dingos-walk-110-137-74-182.loca.lt',
+  url: 'https://chatty-dingos-walk-110-137-74-182.loca.lt/api/v1',
+  imageUsers: 'https://chatty-dingos-walk-110-137-74-182.loca.lt/uploads/users',
+  imageFoods: 'https://chatty-dingos-walk-110-137-74-182.loca.lt/uploads/foods',
 };

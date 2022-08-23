@@ -3,7 +3,7 @@ import {
   GET_DETAIL_TRANSACTION,
   ERROR_TRANSACTION,
   GET_TRANSACTION_PENDING,
-  GET_TRANSACTION_SENTLEMENT,
+  GET_TRANSACTION_SETTLEMENT,
   GET_TRANSACTION_CANCEL,
 } from './types';
 
@@ -12,7 +12,7 @@ const initialState = {
   detail: {},
   transactionByStatus: {
     pending: [],
-    sentlement: [],
+    settlement: [],
     cancel: [],
   },
   error: {},
@@ -41,12 +41,12 @@ const reducers = (state = initialState, action) => {
         },
       };
 
-    case GET_TRANSACTION_SENTLEMENT:
+    case GET_TRANSACTION_SETTLEMENT:
       return {
         ...state,
         transactionByStatus: {
           ...state.transactionByStatus,
-          sentlement: action.sentlement,
+          settlement: action.settlement,
         },
       };
 

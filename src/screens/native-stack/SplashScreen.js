@@ -5,14 +5,24 @@ import Logo from '../../assets/Ilustration/Logo.svg';
 import Gap from '../../components/Gap';
 import {useNavigation} from '@react-navigation/native';
 import {getData} from '../../utils/asyncStorage';
+import {setAccessToken, fetchRefreshToken} from '../../redux/session/actions';
+import {useDispatch} from 'react-redux';
+import jwtDecode from 'jwt-decode';
 
 const SplashScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setTimeout(async () => {
-      const token = await getData('token');
-      if (token) {
+      const accessToken = await getData('access-token');
+      if (accessToken) {
+        const decodeAccessToken = jwtDecode(accessToken);
+        const user_id = decodeAccessToken?.id;
+
+        dispatch(setAccessToken(accessToken));
+        dispatch(fetchRefreshToken(user_id));
+
         navigation.reset({
           index: 0,
           routes: [
@@ -25,7 +35,7 @@ const SplashScreen = () => {
         navigation.replace('SignInScreen');
       }
     }, 2000);
-  }, [navigation]);
+  }, [navigation, dispatch]);
 
   return (
     <View style={tw.style('flex-1 justify-center items-center bg-[#FFC700]')}>

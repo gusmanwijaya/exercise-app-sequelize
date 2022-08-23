@@ -4,12 +4,12 @@ import {getData} from '../utils/asyncStorage';
 export default async function callApi({url, method, isFormData, data, token}) {
   let headers = {};
 
-  const getTokenLocalStorage = await getData('token');
+  const getTokenLocalStorage = await getData('access-token');
   if (getTokenLocalStorage) {
     headers = {
       Authorization: `Bearer ${getTokenLocalStorage}`,
     };
-  } else {
+  } else if (token) {
     headers = {
       Authorization: `Bearer ${token}`,
     };

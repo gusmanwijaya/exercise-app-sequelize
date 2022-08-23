@@ -1,5 +1,5 @@
 import {View, ScrollView, Text} from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import tw from 'twrnc';
 import {useNavigation} from '@react-navigation/native';
 import ProfileDummy from '../../assets/Dummy/profile-dummy.png';
@@ -12,6 +12,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {fetchProfile} from '../../redux/profile/actions';
 import {fetchFood} from '../../redux/food/actions';
 import {HOST_API} from '../../configs/hostApi';
+import {getData, storeData} from '../../utils/asyncStorage';
+import jwtDecode from 'jwt-decode';
+import {fetchRefreshToken, setAccessToken} from '../../redux/session/actions';
+import {getRefreshToken, getNewAccessToken} from '../../services/refresh-token';
+import {toast} from '../../utils/toast';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -19,6 +24,45 @@ const HomeScreen = () => {
 
   const {data} = useSelector(state => state.profileReducers);
   const {food} = useSelector(state => state.foodReducers);
+
+  const getNewAccessTokenWhenCloseToExpire = useCallback(async () => {
+    const accessTokenLocalStorage = await getData('access-token');
+    const decodeAccessTokenLocalStorage = jwtDecode(accessTokenLocalStorage);
+    const user_id = decodeAccessTokenLocalStorage?.id;
+
+    const responseGetRefreshToken = await getRefreshToken(user_id);
+    if (responseGetRefreshToken?.data?.statusCode === 200) {
+      const refresh_token = responseGetRefreshToken?.data?.data?.refresh_token;
+      const dataRefreshToken = {
+        refresh_token,
+      };
+      const responseNewAccessToken = await getNewAccessToken(dataRefreshToken);
+      if (responseNewAccessToken?.data?.statusCode === 201) {
+        const newAccessToken = responseNewAccessToken?.data?.data?.accessToken;
+        dispatch(setAccessToken(newAccessToken));
+        dispatch(fetchRefreshToken(user_id));
+        storeData('access-token', newAccessToken);
+      } else {
+        toast(
+          responseNewAccessToken?.data?.message ||
+            'Terjadi kesalahan pada API new access token',
+          'danger',
+        );
+      }
+    } else {
+      toast(
+        responseGetRefreshToken?.data?.message ||
+          'Terjadi kesalahan pada API get refresh token',
+        'danger',
+      );
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    setInterval(() => {
+      getNewAccessTokenWhenCloseToExpire();
+    }, 1000 * 60 * 18); //Ulangi setiap 18 menit
+  }, [getNewAccessTokenWhenCloseToExpire]);
 
   useEffect(() => {
     dispatch(fetchProfile());

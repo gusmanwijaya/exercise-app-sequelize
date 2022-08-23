@@ -11,6 +11,8 @@ import {toast} from '../../utils/toast';
 import {signIn} from '../../services/auth';
 import {useDispatch} from 'react-redux';
 import {setLoading} from '../../redux/loading/actions';
+import {setAccessToken, fetchRefreshToken} from '../../redux/session/actions';
+import jwtDecode from 'jwt-decode';
 
 const SignInScreen = () => {
   const navigation = useNavigation();
@@ -27,7 +29,12 @@ const SignInScreen = () => {
       const response = await signIn(form);
       if (response?.data?.statusCode === 200) {
         dispatch(setLoading(false));
-        storeData('token', response?.data?.data?.token);
+
+        storeData('access-token', response?.data?.data?.accessToken);
+        dispatch(setAccessToken(response?.data?.data?.accessToken));
+        const decodeAccessToken = jwtDecode(response?.data?.data?.accessToken);
+        dispatch(fetchRefreshToken(decodeAccessToken?.id));
+
         navigation.replace('ContentTabs', {
           screen: 'HomeScreen',
         });
@@ -38,7 +45,7 @@ const SignInScreen = () => {
       } else {
         dispatch(setLoading(false));
         toast(
-          response?.data?.message || 'Terjadi kesalahan pada API sistem',
+          response?.data?.message || 'Terjadi kesalahan pada API sign in',
           'danger',
         );
       }

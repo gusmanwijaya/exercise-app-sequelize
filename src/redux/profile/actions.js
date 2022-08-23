@@ -1,6 +1,6 @@
 import {ERROR_PROFILE, GET_PROFILE} from './types';
-import {getProfile} from '../../services/profile';
 import {setLoading} from '../loading/actions';
+import {getProfile} from '../../services/profile';
 
 const setGetProfile = data => {
   return {
