@@ -1,6 +1,6 @@
 export const HOST_API = {
-  host: 'https://smooth-toes-cross-110-137-74-182.loca.lt',
-  url: 'https://smooth-toes-cross-110-137-74-182.loca.lt/api/v1',
-  imageUsers: 'https://smooth-toes-cross-110-137-74-182.loca.lt/uploads/users',
-  imageFoods: 'https://smooth-toes-cross-110-137-74-182.loca.lt/uploads/foods',
+  host: 'https://foodmarket-server.herokuapp.com',
+  url: 'https://foodmarket-server.herokuapp.com/api/v1',
+  imageUsers: 'https://foodmarket-server.herokuapp.com/uploads/users',
+  imageFoods: 'https://foodmarket-server.herokuapp.com/uploads/foods',
 };

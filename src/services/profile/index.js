@@ -7,3 +7,8 @@ export async function getProfile() {
   const url = `${ROOT_API}/users/detail`;
   return callApi({url, method: 'GET'});
 }
+
+export async function updateProfile(isFormData, data) {
+  const url = `${ROOT_API}/users/update-profile`;
+  return callApi({url, method: 'PUT', data, isFormData});
+}

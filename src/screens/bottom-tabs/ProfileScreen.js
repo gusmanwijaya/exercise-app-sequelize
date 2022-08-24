@@ -6,11 +6,71 @@ import ProfileTabView from '../tab-view/Profile';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchProfile} from '../../redux/profile/actions';
 import {HOST_API} from '../../configs/hostApi';
+import {launchImageLibrary} from 'react-native-image-picker';
+import {toast} from '../../utils/toast';
+import {updateProfile} from '../../services/profile';
+import {setLoading} from '../../redux/loading/actions';
 
 const ProfileScreen = () => {
   const dispatch = useDispatch();
 
   const {data} = useSelector(state => state.profileReducers);
+
+  const handleUploadPhoto = async () => {
+    dispatch(setLoading(true));
+
+    await launchImageLibrary(
+      {
+        quality: 0.5,
+        maxWidth: 200,
+        maxHeight: 200,
+      },
+      async response => {
+        if (response.didCancel || response.error) {
+          dispatch(setLoading(false));
+          toast('Anda tidak memilih gambar', 'danger');
+        } else {
+          if (
+            response?.assets[response?.assets.length - 1]?.fileSize >= 3000000
+          ) {
+            dispatch(setLoading(false));
+            toast('Max ukuran gambar 3 Mb', 'danger');
+          } else {
+            const picturePath = {
+              uri: response?.assets[response?.assets.length - 1]?.uri,
+              type: response?.assets[response?.assets.length - 1]?.type,
+              name: response?.assets[response?.assets.length - 1]?.fileName,
+            };
+            const formData = new FormData();
+            formData.append('name', data?.name);
+            formData.append('email', data?.email);
+            formData.append('address', data?.address);
+            formData.append('houseNumber', data?.houseNumber);
+            formData.append('phoneNumber', data?.phoneNumber);
+            formData.append('city', data?.city);
+            formData.append('picturePath', picturePath);
+
+            const responseUpdateProfile = await updateProfile(true, formData);
+            if (responseUpdateProfile?.data?.statusCode === 200) {
+              dispatch(setLoading(false));
+              dispatch(fetchProfile());
+              toast(
+                responseUpdateProfile?.data?.message ||
+                  'Terjadi kesalahan pada API update profile',
+                'success',
+              );
+            } else {
+              toast(
+                responseUpdateProfile?.data?.message ||
+                  'Terjadi kesalahan pada API update profile',
+                'danger',
+              );
+            }
+          }
+        }
+      },
+    );
+  };
 
   useEffect(() => {
     dispatch(fetchProfile());
@@ -27,7 +87,7 @@ const ProfileScreen = () => {
           style={tw.style(
             'android:mt-[26px] ios:mt-[80px] mb-[16px] items-center',
           )}>
-          <TouchableOpacity activeOpacity={0.7}>
+          <TouchableOpacity activeOpacity={0.7} onPress={handleUploadPhoto}>
             <View
               style={tw.style(
                 'w-[110px] h-[110px] rounded-[110px] border border-dashed border-[#8D92A3] justify-center items-center',

@@ -25,7 +25,6 @@ const SignUpAddressScreen = () => {
     houseNumber: '',
     phoneNumber: '',
     city: '',
-    pictureUri: params?.imageData?.uri,
     picturePath: {
       uri: params?.imageData?.uri,
       type: params?.imageData?.type,
@@ -49,7 +48,6 @@ const SignUpAddressScreen = () => {
       formData.append('houseNumber', form?.houseNumber);
       formData.append('phoneNumber', form?.phoneNumber);
       formData.append('city', form?.city);
-      formData.append('pictureUri', form?.pictureUri);
       formData.append('picturePath', form?.picturePath);
 
       const response = await signUp(true, formData);

@@ -9,6 +9,9 @@ import Button from '../../components/Button';
 import SelectInput from '../../components/SelectInput';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchProfile} from '../../redux/profile/actions';
+import {updateProfile} from '../../services/profile';
+import {toast} from '../../utils/toast';
+import {setLoading} from '../../redux/loading/actions';
 
 const EditProfileScreen = () => {
   const navigation = useNavigation();
@@ -25,7 +28,28 @@ const EditProfileScreen = () => {
     city: data?.city,
   });
 
-  const handleUpdateProfile = async () => {};
+  const handleUpdateProfile = async () => {
+    dispatch(setLoading(true));
+
+    const responseUpdateProfile = await updateProfile(false, form);
+    if (responseUpdateProfile?.data?.statusCode === 200) {
+      dispatch(fetchProfile());
+      dispatch(setLoading(false));
+      toast(
+        responseUpdateProfile?.data?.message ||
+          'Terjadi kesalahan pada API update profile',
+        'success',
+      );
+      navigation.goBack();
+    } else {
+      dispatch(setLoading(false));
+      toast(
+        responseUpdateProfile?.data?.message ||
+          'Terjadi kesalahan pada API update profile',
+        'danger',
+      );
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchProfile());
@@ -48,6 +72,7 @@ const EditProfileScreen = () => {
           placeholder="Type your full name"
           name="name"
           value={form?.name}
+          onChangeText={value => setForm({...form, name: value})}
         />
         <Gap height={16} />
         <Input
@@ -56,6 +81,7 @@ const EditProfileScreen = () => {
           name="email"
           keyboardType="email-address"
           value={form?.email}
+          onChangeText={value => setForm({...form, email: value})}
         />
         <Gap height={16} />
         <Input
@@ -64,6 +90,7 @@ const EditProfileScreen = () => {
           name="phoneNumber"
           keyboardType="phone-pad"
           value={form?.phoneNumber}
+          onChangeText={value => setForm({...form, phoneNumber: value})}
         />
         <Gap height={16} />
         <Input
@@ -71,6 +98,7 @@ const EditProfileScreen = () => {
           placeholder="Type your address"
           name="address"
           value={form?.address}
+          onChangeText={value => setForm({...form, address: value})}
         />
         <Gap height={16} />
         <Input
@@ -79,6 +107,7 @@ const EditProfileScreen = () => {
           name="houseNumber"
           keyboardType="number-pad"
           value={form?.houseNumber}
+          onChangeText={value => setForm({...form, houseNumber: value})}
         />
         <Gap height={16} />
         <SelectInput
